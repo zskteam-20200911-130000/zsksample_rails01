@@ -15,8 +15,8 @@ require 'rails_helper'
 RSpec.describe '/users', type: :request do
   # User. As you add validations to User, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { name: 'test', email:'test@test.com' } }
-  let(:invalid_attributes) { { name: '', email:'' } }
+  let(:valid_attributes) { { name: 'test', email: 'test@test.com' } }
+  let(:invalid_attributes) { { name: '', email: '' } }
 
   describe 'GET /index' do
     it 'renders a successful response' do
@@ -79,13 +79,12 @@ RSpec.describe '/users', type: :request do
 
   describe 'PATCH /update' do
     context 'with valid parameters' do
-      let(:new_attributes) { { name: 'test1', email:'test1@test1.com' } }
+      let(:new_attributes) { { name: 'test1', email: 'test1@test1.com' } }
 
       it 'updates the requested user' do
         user = User.create! valid_attributes
         expect do
           patch user_url(user), params: { user: new_attributes }
-          user.reload
         end.to change { User.find(user.id).name }.from(user.name).to(new_attributes[:name])
       end
 
@@ -102,6 +101,13 @@ RSpec.describe '/users', type: :request do
         user = User.create! valid_attributes
         patch user_url(user), params: { user: invalid_attributes }
         expect(response).to be_successful
+      end
+
+      it 'does not updates the user infomation' do
+        user = User.create! valid_attributes
+        expect do
+          patch user_url(user), params: { user: invalid_attributes }
+        end.not_to change(User.find(user.id), :name)
       end
     end
   end
