@@ -20,7 +20,8 @@
       <td>
         <% if micropost.images.attached? %>
         <% micropost.images.each do |image| %>
-        <%= image_tag image %> <br>
+        <%= image_tag image.variant(resize_to_fill: [50, 50]) %> <br>
+
         <% end %>
         <% end %>
       </td>
