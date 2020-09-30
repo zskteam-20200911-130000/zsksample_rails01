@@ -21,6 +21,10 @@
   <%= form.collection_select :user_id, User.all, :id, :name %>
 </div>
 
+<%= form.file_field :images, multiple: true %>
+<br>
+<br>
+
 <div class="actions">
   <%= form.submit %>
 </div>
