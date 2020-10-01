@@ -10,5 +10,15 @@
   email = "test#{n}"
   u = User.create!(name: name, email: email)
   content = "test#{n} content"
-  u.microposts.create!(content: content)
+  micropost = u.microposts.create!(content: content)
+  if (n % 3).zero?
+    params = { io: File.open(Rails.root.join('app/assets/images/image.png').to_s),
+               filename: 'image.png',
+               content_type: 'image/png' }
+  elsif (n % 7).zero?
+    params = { io: File.open(Rails.root.join('app/assets/images/slack.png').to_s),
+               filename: 'slack.png',
+               content_type: 'image/png' }
+  end
+  micropost.images.attach(params)
 end
