@@ -2,10 +2,12 @@ class MicropostsController < ApplicationController
   before_action :set_micropost, only: %i[show edit update destroy]
 
   def index
-    @microposts = Micropost.all
+    @microposts = Micropost.order(id: :asc).page(params[:page])
   end
 
-  def show; end
+  def show
+    @micropost = Micropost.find(params[:id])
+  end
 
   def new
     @micropost = Micropost.new
@@ -54,6 +56,6 @@ class MicropostsController < ApplicationController
   end
 
   def micropost_params
-    params.require(:micropost).permit(:content, :user_id)
+    params.require(:micropost).permit(:content, :user_id, images: [])
   end
 end
