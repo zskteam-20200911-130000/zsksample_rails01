@@ -2,7 +2,7 @@ class MicropostsController < ApplicationController
   before_action :set_micropost, only: %i[show edit update destroy]
 
   def index
-    @microposts = Micropost.all
+    @microposts = Micropost.order(id: :asc).page(params[:page])
   end
 
   def show
